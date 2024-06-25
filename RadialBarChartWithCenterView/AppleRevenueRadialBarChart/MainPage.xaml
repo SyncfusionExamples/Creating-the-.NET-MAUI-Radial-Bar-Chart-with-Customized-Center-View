@@ -40,20 +40,22 @@
                 <DataTemplate x:Key="tooltipTemplate">
                     <StackLayout Orientation="Vertical" VerticalOptions="Center" Margin="{OnPlatform MacCatalyst='3'}">
                         <HorizontalStackLayout HorizontalOptions="Center">
-                            <Ellipse WidthRequest="10" HeightRequest="10" Stroke="White" Background="{Binding Item.Color,Converter={StaticResource brushToColor}}" StrokeThickness="2"
+                            <Ellipse WidthRequest="{OnPlatform Default=10, MacCatalyst=15}" Stroke="White" 
+                                     HeightRequest="{OnPlatform Default=10, MacCatalyst=15}" StrokeThickness="2"
+                                     Background="{Binding Item.Color,Converter={StaticResource brushToColor}}" 
                                      HorizontalOptions="Center" VerticalOptions="Center"/>
                             <Label Text="{Binding Item.Category, StringFormat=' {0}'}" TextColor="White" 
-					        FontAttributes="Bold" FontSize="{OnPlatform Default='12', Android='10', MacCatalyst='18'}"
+					        FontAttributes="Bold" FontSize="{OnPlatform Default='12', Android='10', iOS='10', MacCatalyst='18'}"
 					        HorizontalOptions="Center" VerticalOptions="Center"/>
                         </HorizontalStackLayout>
-                        <BoxView HeightRequest="0.5" Color="White"/>
+                        <BoxView HeightRequest="{OnPlatform Default=0.5, MacCatalyst=1}" Color="White"/>
                         <HorizontalStackLayout>
                             <Label Text="Revenue:" TextColor="White" FontAttributes="Bold"
-                                FontSize="{OnPlatform Default='12', Android='10', MacCatalyst='18'}"
+                                FontSize="{OnPlatform Default='12', Android='10', iOS='10', MacCatalyst='18'}"
                                 HorizontalOptions="Center" VerticalOptions="Center"/>
                             <Label TextColor="White" FontAttributes="Bold"
                                 Text="{Binding Item.Revenue, StringFormat=' {0}', Converter={StaticResource percentageConverter}}"
-				                FontSize="{OnPlatform Default='12', Android='10', MacCatalyst='18'}"
+				                FontSize="{OnPlatform Default='12', Android='10', iOS='10', MacCatalyst='18'}"
 				                HorizontalOptions="Center" VerticalOptions="Center"/>
                         </HorizontalStackLayout>
                     </StackLayout>
@@ -86,7 +88,7 @@
             </chart:SfCircularChart.TooltipBehavior>
 
             <chart:SfCircularChart.Legend>
-                <chart:ChartLegend Placement="{OnPlatform Android=Right, Default=Bottom}" 
+                <chart:ChartLegend Placement="{OnPlatform Android=Right, iOS=Right, Default=Bottom}" 
                                    ItemTemplate="{StaticResource LegendTemplate}"/>
             </chart:SfCircularChart.Legend>
 
