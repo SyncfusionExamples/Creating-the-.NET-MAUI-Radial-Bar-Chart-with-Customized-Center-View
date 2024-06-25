@@ -9,23 +9,30 @@ namespace AppleRevenueRadialBarChart
 
         public ViewModel()
         {
-            RadialBarData = new ObservableCollection<Model>()
+            var colors = new string[]
             {
-                new Model("Services", 78129, "service"),
-                new Model("Wearables", 41241, "earphone"),
-                new Model("iPad", 29292, "ipad"),
-                new Model("Mac", 40177, "mac"),
-                new Model("iPhone", 205489, "iphone"),
+                "#0B77E3",
+                "#1D5B6F",
+                "#BD34B7",
+                "#DE7207",
+                "#8E4AFC"
             };
 
-            Palette = new ObservableCollection<Brush>()
+            RadialBarData = new ObservableCollection<Model>()
             {
-                  new SolidColorBrush(Color.FromArgb("#0B77E3")),
-                  new SolidColorBrush(Color.FromArgb("#1D5B6F")),
-                  new SolidColorBrush(Color.FromArgb("#BD34B7")),
-                  new SolidColorBrush(Color.FromArgb("#DE7207")),
-                  new SolidColorBrush(Color.FromArgb("#8E4AFC")),
+                new Model("Services", 78129, "service", CreateBrush(colors[0])),
+                new Model("Wearables", 41241, "earphone", CreateBrush(colors[1])),
+                new Model("iPad", 29292, "ipad", CreateBrush(colors[2])),
+                new Model("Mac", 40177, "mac", CreateBrush(colors[3])),
+                new Model("iPhone", 205489, "iphone", CreateBrush(colors[4]))
             };
+
+            Palette = new ObservableCollection<Brush>(colors.Select(CreateBrush));
+        }
+
+        private SolidColorBrush CreateBrush(string hexColor)
+        {
+            return new SolidColorBrush(Color.FromArgb(hexColor));
         }
     }
 }

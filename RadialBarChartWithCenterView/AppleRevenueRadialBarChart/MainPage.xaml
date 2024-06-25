@@ -38,14 +38,24 @@
                 </DataTemplate>
 
                 <DataTemplate x:Key="tooltipTemplate">
-                    <StackLayout Orientation="Horizontal" VerticalOptions="Center" Margin="{OnPlatform MacCatalyst='3'}">
-                        <Label Text="{Binding Item.Category, StringFormat='{0}: '}" TextColor="White"
-					        FontAttributes="Bold" FontSize="{OnPlatform Default='12', MacCatalyst='18'}"
+                    <StackLayout Orientation="Vertical" VerticalOptions="Center" Margin="{OnPlatform MacCatalyst='3'}">
+                        <HorizontalStackLayout HorizontalOptions="Center">
+                            <Ellipse WidthRequest="10" HeightRequest="10" Stroke="White" Background="{Binding Item.Color,Converter={StaticResource brushToColor}}" StrokeThickness="2"
+                                     HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label Text="{Binding Item.Category, StringFormat=' {0}'}" TextColor="White" 
+					        FontAttributes="Bold" FontSize="{OnPlatform Default='12', Android='10', MacCatalyst='18'}"
 					        HorizontalOptions="Center" VerticalOptions="Center"/>
-                        <Label Text="{Binding Item.Revenue, Converter={StaticResource percentageConverter}}"
-					        TextColor="White" FontAttributes="Bold"
-					        FontSize="{OnPlatform Default='12', MacCatalyst='18'}"
-					        HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                        <BoxView HeightRequest="0.5" Color="White"/>
+                        <HorizontalStackLayout>
+                            <Label Text="Revenue:" TextColor="White" FontAttributes="Bold"
+                                FontSize="{OnPlatform Default='12', Android='10', MacCatalyst='18'}"
+                                HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label TextColor="White" FontAttributes="Bold"
+                                Text="{Binding Item.Revenue, StringFormat=' {0}', Converter={StaticResource percentageConverter}}"
+				                FontSize="{OnPlatform Default='12', Android='10', MacCatalyst='18'}"
+				                HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
                     </StackLayout>
                 </DataTemplate>
 

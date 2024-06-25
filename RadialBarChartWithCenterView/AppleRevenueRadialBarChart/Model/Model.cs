@@ -6,12 +6,14 @@ namespace AppleRevenueRadialBarChart
         public string Category { get; set; }
         public double Revenue { get; set; }
         public string CategoryImage { get; set; }
+        public SolidColorBrush Color { get; set; }
 
-        public Model(string category, double revenue, string categoryImage)
+        public Model(string category, double revenue, string categoryImage, SolidColorBrush color)
         {
             Category = category;
             Revenue = revenue;
             CategoryImage = categoryImage + ".png";
+            Color = color;
         }
     }
 }
