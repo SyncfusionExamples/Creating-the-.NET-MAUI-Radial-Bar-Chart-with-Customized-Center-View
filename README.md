@@ -37,6 +37,9 @@ Syncfusion’s Circular Chart enhances interactivity with [tooltips](https://hel
 
 After executing these code examples, we will get the output that resembles the following image. 
 
+![OutputWithAudio](https://github.com/SyncfusionExamples/Creating-the-.NET-MAUI-Radial-Bar-Chart-to-Visualize-Apples-Revenue-Breakdown/assets/105496706/c2f1db20-708b-47dd-9b70-20bf3a606daf)
+
+
 ## Troubleshooting
 Path too long exception
 
