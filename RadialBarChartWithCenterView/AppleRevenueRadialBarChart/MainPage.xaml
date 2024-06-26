@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppleRevenueRadialBarChart.MainPage"
+             xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+             xmlns:local="clr-namespace:AppleRevenueRadialBarChart">
+
+    <Border Stroke="#092748" Padding="{OnPlatform Default=10, Android=7,iOS=7}" 
+            StrokeShape="RoundRectangle 10" Margin="{OnPlatform Android=10, Default=25}" StrokeThickness="2">
+
+        <chart:SfCircularChart x:Name="chart" Margin="{OnPlatform iOS='-30, 0, 0, 0'}">
+
+            <chart:SfCircularChart.Resources>
+
+                <local:BrushToColorConverter x:Key="brushToColor" />
+
+                <local:BillionConverter x:Key="billionConverter" />
+
+                <local:PercentageConverter x:Key="percentageConverter" />
+
+                <DataTemplate x:Key="LegendTemplate">
+                    <Grid ColumnDefinitions="Auto,Auto" Margin="{OnPlatform Android='0, -5, 0, 10', Default='20, 0, 0, 0'}">
+                        <Image Grid.Column="0" Source="{Binding Item.CategoryImage}" 
+                               WidthRequest="{OnPlatform Default='35', iOS='40', MacCatalyst='50'}" 
+                               HeightRequest="{OnPlatform Default='35', iOS='40', MacCatalyst='50'}" />
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label FontSize="{OnPlatform Default='13', iOS='16', MacCatalyst='18'}" 
+                                VerticalTextAlignment="Center" Text="{Binding Item.Category}" 
+                                TextColor="{Binding IconBrush,Converter={StaticResource brushToColor}}" Margin="0,2,0,0"
+                                HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Center"/>
+                            <Label FontSize="{OnPlatform Default='13', iOS='16', MacCatalyst='18'}" 
+                                VerticalTextAlignment="Center" 
+                                Text="{Binding Item.Revenue, Converter={StaticResource billionConverter}}"
+                                TextColor="{Binding IconBrush,Converter={StaticResource brushToColor}}" Margin="0,2,0,0"
+                                HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </DataTemplate>
+
+                <DataTemplate x:Key="tooltipTemplate">
+                    <StackLayout Orientation="Vertical" VerticalOptions="Center" Margin="{OnPlatform MacCatalyst='3'}">
+                        <HorizontalStackLayout HorizontalOptions="Center">
+                            <Ellipse WidthRequest="{OnPlatform Default=10, MacCatalyst=15}" Stroke="White" 
+                                     HeightRequest="{OnPlatform Default=10, MacCatalyst=15}" StrokeThickness="2"
+                                     Background="{Binding Item.Color,Converter={StaticResource brushToColor}}" 
+                                     HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label Text="{Binding Item.Category, StringFormat=' {0}'}" TextColor="White" 
+					        FontAttributes="Bold" FontSize="{OnPlatform Default='12', Android='10', iOS='10', MacCatalyst='18'}"
+					        HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                        <BoxView HeightRequest="{OnPlatform Default=0.5, MacCatalyst=1}" Color="White"/>
+                        <HorizontalStackLayout>
+                            <Label Text="Revenue:" TextColor="White" FontAttributes="Bold"
+                                FontSize="{OnPlatform Default='12', Android='10', iOS='10', MacCatalyst='18'}"
+                                HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label TextColor="White" FontAttributes="Bold"
+                                Text="{Binding Item.Revenue, StringFormat=' {0}', Converter={StaticResource percentageConverter}}"
+				                FontSize="{OnPlatform Default='12', Android='10', iOS='10', MacCatalyst='18'}"
+				                HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </StackLayout>
+                </DataTemplate>
+
+            </chart:SfCircularChart.Resources>
+
+            <chart:SfCircularChart.BindingContext>
+                <local:ViewModel x:Name="viewModel"/>
+            </chart:SfCircularChart.BindingContext>
+
+            <chart:SfCircularChart.Title>
+
+                <HorizontalStackLayout>
+                    <Image Source="revenue.png" WidthRequest="{OnPlatform Default='50', iOS='40', MacCatalyst='70'}"/>
+                    <VerticalStackLayout>
+                        <Label Text="Apple's Revenue Breakdown for FY 2022" Margin="5,0,0,0" HorizontalOptions="CenterAndExpand" 
+                               HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" 
+                               FontSize="{OnPlatform Default='25', iOS='22', MacCatalyst='28'}" FontAttributes="Bold" />
+                        <Label Text="Revenue growth rate calculated by product category" Margin="5,0,0,0" 
+                               HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" 
+                               FontSize="{OnPlatform WinUI='14', Android='12', iOS='14', MacCatalyst='18'}" TextColor="Gray"/>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+
+            </chart:SfCircularChart.Title>
+
+            <chart:SfCircularChart.TooltipBehavior>
+                <chart:ChartTooltipBehavior />
+            </chart:SfCircularChart.TooltipBehavior>
+
+            <chart:SfCircularChart.Legend>
+                <chart:ChartLegend Placement="{OnPlatform Android=Right, iOS=Right, Default=Bottom}" 
+                                   ItemTemplate="{StaticResource LegendTemplate}"/>
+            </chart:SfCircularChart.Legend>
+
+            <chart:RadialBarSeries LegendIcon="Circle" ItemsSource="{Binding RadialBarData}" PaletteBrushes="{Binding Palette}"
+                            x:Name="series" EnableTooltip="True" TooltipTemplate="{StaticResource tooltipTemplate}"
+                            YBindingPath="Revenue"  Radius="{OnPlatform Android=1, iOS=1, Default=0.8}"
+                            MaximumValue="218000" GapRatio="0.4" TrackFill="#E7E0EC"
+                            CapStyle="BothCurve" XBindingPath="Category" >
+
+                <chart:RadialBarSeries.CenterView>
+
+                    <VerticalStackLayout Margin="{OnPlatform WinUI='0, -20, 0, 0', Default='0, -10, 0, 0'}" >
+                        <Image HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"  Source="apple.png" 
+                               HeightRequest="{OnPlatform iOS=70, Android=70, WinUI=85, MacCatalyst=120}" 
+                               WidthRequest="{OnPlatform iOS=70, Android=70, WinUI=100, MacCatalyst=120}" />
+                        <VerticalStackLayout Margin="{OnPlatform WinUI='0, -10, 0, 0', Default='0, -10, 0, 0'}" >
+                            <Label Text="Total revenue " FontSize="{OnPlatform Android=12, iOS=14, WinUI=12, MacCatalyst=18}" 
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                            <Label Text="$394.3B" FontSize="{OnPlatform Android=14, iOS=18, WinUI=16, MacCatalyst=22}" 
+                                   FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+
+                </chart:RadialBarSeries.CenterView>
+
+            </chart:RadialBarSeries>
+
+        </chart:SfCircularChart>
+
+    </Border>
+
+</ContentPage>
