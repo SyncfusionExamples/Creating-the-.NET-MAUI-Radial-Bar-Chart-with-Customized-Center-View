@@ -45,5 +45,5 @@ Path too long exception
 
 If you are facing a path too long exception when building this example project, close Visual Studio and rename the repository to short and build the project.
 
-For a step-by-step procedure, refer to the [Radial Bar Chart with customized center view blog post]().
+For a step-by-step procedure, refer to the [Radial Bar Chart with customized center view blog post](https://www.syncfusion.com/blogs/post/dotnet-maui-radial-bar-apple-revenue).
 
